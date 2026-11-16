@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mundo Sabroso — Revista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600;1,800&family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tomate: #C8402B;
+    --tomate-osc: #8E2617;
+    --azafran: #F2A541;
+    --maiz: #F6D27A;
+    --aguacate: #4F7F45;
+    --aguacate-cl: #E3EED8;
+    --crema: #FFF8EE;
+    --papel: #FBF1E2;
+    --tinta: #2B2118;
+    --tinta-suave: #5E4E40;
+    --linea: #E7D6BF;
+    --chocolate: #5A3220;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    background: #E6DFD4;
+    color: var(--tinta);
+    font-family: "Inter", "Liberation Sans", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+  .page {
+    width: 210mm; height: 297mm;
+    margin: 12mm auto;
+    background: var(--crema);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 30px rgba(43,33,24,.25);
+  }
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; break-after: page; }
+    .page:last-child { break-after: auto; }
+  }
+  h1, h2, h3, .serif { font-family: "Playfair Display", "DejaVu Serif", serif; }
+  .mano { font-family: "Caveat", cursive; }
+
+  /* ---------- Cabecera y pie de páginas internas ---------- */
+  .cabecera {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9mm 14mm 0;
+    font-size: 7.5pt; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--tinta-suave); font-weight: 600;
+  }
+  .cabecera b { color: var(--tomate); font-family: "Playfair Display", serif; font-size: 11pt; letter-spacing: .04em; text-transform: none; font-weight: 900; }
+  .pie {
+    position: absolute; left: 14mm; right: 14mm; bottom: 8mm;
+    display: flex; justify-content: space-between;
+    font-size: 7.5pt; color: var(--tinta-suave); letter-spacing: .08em;
+    border-top: 1px solid var(--linea); padding-top: 2.5mm;
+  }
+  .pie .num { font-weight: 800; color: var(--tomate); }
+  .seccion {
+    padding: 4mm 14mm 0;
+  }
+  .antetitulo {
+    display: inline-block; font-size: 8pt; font-weight: 800; letter-spacing: .2em;
+    text-transform: uppercase; color: #fff; background: var(--tomate);
+    padding: 1.2mm 3mm; border-radius: 1mm;
+  }
+  .titulo-seccion {
+    font-size: 27pt; line-height: 1.05; font-weight: 900; margin-top: 2.5mm;
+  }
+  .titulo-seccion em { color: var(--tomate); font-style: italic; }
+  .bajada { color: var(--tinta-suave); font-size: 10pt; margin-top: 1mm; }
+
+  /* ================= PÁGINA 1: PORTADA ================= */
+  .portada { background: var(--crema); }
+  .portada .rojo {
+    position: absolute; inset: 0 0 auto 0; height: 196mm;
+    background:
+      radial-gradient(circle at 80% 35%, rgba(242,165,65,.35), transparent 55%),
+      linear-gradient(160deg, #D9532F 0%, var(--tomate) 45%, var(--tomate-osc) 100%);
+  }
+  .portada .rojo::after { /* puntitos decorativos */
+    content: ""; position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.09) 1.2px, transparent 1.3px);
+    background-size: 7mm 7mm;
+  }
+  .portada .barra {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between;
+    padding: 9mm 14mm 0; color: rgba(255,255,255,.9);
+    font-size: 7.5pt; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  }
+  .cabezal { position: relative; z-index: 2; padding: 5mm 14mm 0; color: #fff; }
+  .cabezal .mundo {
+    font-family: "Playfair Display", serif; font-style: italic; font-weight: 600;
+    font-size: 34pt; line-height: 1; color: var(--maiz); margin-left: 1mm;
+  }
+  .cabezal .sabroso {
+    font-family: "Playfair Display", serif; font-weight: 900;
+    font-size: 88pt; line-height: .9; letter-spacing: -.01em;
+    text-shadow: 0 3px 0 rgba(0,0,0,.15);
+  }
+  .cabezal .lema {
+    margin-top: 3mm; font-size: 11pt; font-weight: 500; letter-spacing: .04em;
+    color: rgba(255,255,255,.92);
+  }
+  .cabezal .lema b { color: var(--maiz); }
+
+  .portada .ilustracion {
+    position: absolute; z-index: 2; right: 6mm; top: 72mm; width: 122mm;
+  }
+  .titulares {
+    position: absolute; z-index: 3; left: 14mm; top: 82mm; width: 70mm;
+    color: #fff; list-style: none;
+  }
+  .titulares li { margin-bottom: 6mm; padding-left: 4mm; border-left: 2.5px solid var(--azafran); }
+  .titulares .pag { font-size: 7.5pt; font-weight: 800; letter-spacing: .18em; color: var(--maiz); text-transform: uppercase; }
+  .titulares .t { font-family: "Playfair Display", serif; font-weight: 800; font-size: 15pt; line-height: 1.12; }
+  .titulares .d { font-size: 9pt; color: rgba(255,255,255,.85); margin-top: .8mm; line-height: 1.3; }
+
+  .pegatina {
+    position: absolute; z-index: 4; right: 12mm; top: 52mm;
+    width: 33mm; height: 33mm; border-radius: 50%;
+    background: var(--azafran); color: var(--tomate-osc);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    transform: rotate(12deg);
+    font-weight: 800; font-size: 9pt; line-height: 1.1; padding: 3mm;
+    box-shadow: 0 2px 0 rgba(0,0,0,.18), inset 0 0 0 1.2mm rgba(255,255,255,.35);
+  }
+  .pegatina span { display: block; font-family: "Playfair Display", serif; font-size: 13pt; font-weight: 900; }
+
+  .editorial {
+    position: absolute; z-index: 3; left: 14mm; right: 14mm; top: 203mm;
+    display: grid; grid-template-columns: 34mm 1fr; gap: 6mm;
+  }
+  .editorial .rotulo {
+    font-family: "Playfair Display", serif; font-weight: 900; font-size: 24pt; line-height: 1;
+    color: var(--tomate); border-top: 3px solid var(--tinta); padding-top: 3mm;
+  }
+  .editorial .rotulo small {
+    display: block; font-family: "Inter", sans-serif; font-size: 7.5pt; letter-spacing: .18em;
+    color: var(--tinta-suave); font-weight: 700; margin-top: 2mm; text-transform: uppercase;
+  }
+  .editorial .texto { border-top: 1px solid var(--linea); padding-top: 3mm; font-size: 11pt; line-height: 1.55; }
+  .editorial .texto p::first-letter {
+    float: left; font-family: "Playfair Display", serif; font-weight: 900;
+    font-size: 34pt; line-height: .85; color: var(--tomate); margin: 1mm 1.5mm 0 0;
+  }
+  .firma { margin-top: 3mm; display: flex; align-items: baseline; gap: 3mm; }
+  .firma .mano { font-size: 17pt; color: var(--tomate-osc); }
+  .firma .quien { font-size: 8.5pt; color: var(--tinta-suave); }
+  .autores {
+    position: absolute; left: 14mm; right: 14mm; bottom: 10mm; z-index: 3;
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--tinta); color: #fff; border-radius: 2mm; padding: 3.5mm 5mm;
+    font-size: 9pt;
+  }
+  .autores b { color: var(--maiz); font-weight: 700; }
+  .autores .k { font-size: 7pt; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.65); display: block; margin-bottom: .5mm; }
+
+  /* ================= PÁGINA 2: RESTAURANTE ================= */
+  .menu { padding: 4mm 14mm 0; display: grid; gap: 4mm; }
+  .plato {
+    display: grid; grid-template-columns: 52mm 1fr; gap: 5mm;
+    background: #fff; border: 1px solid var(--linea); border-radius: 3mm;
+    padding: 3.5mm 4.5mm; position: relative;
+  }
+  .plato.inventado {
+    background: linear-gradient(135deg, #FFF3DC, #FFE7C2);
+    border: 1.5px dashed var(--azafran);
+  }
+  .plato .foto {
+    background: var(--papel); border-radius: 2mm;
+    display: flex; align-items: center; justify-content: center; padding: 2mm;
+  }
+  .plato.inventado .foto { background: rgba(255,255,255,.6); }
+  .plato .foto svg { width: 100%; height: auto; }
+  .plato .pais {
+    display: flex; align-items: center; gap: 2mm;
+    font-size: 7.5pt; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--tinta-suave);
+  }
+  .plato .pais svg { width: 7mm; height: auto; border-radius: .6mm; box-shadow: 0 0 0 .3px rgba(0,0,0,.3); }
+  .plato h2 { font-size: 18pt; font-weight: 900; line-height: 1.05; margin: 1mm 0 1.5mm; }
+  .plato h2 small { font-style: italic; font-weight: 600; font-size: 11pt; color: var(--tomate); }
+  .plato p { font-size: 9.6pt; }
+  .fila { display: flex; gap: 2mm; align-items: flex-start; margin-top: 1.6mm; }
+  .fila .etq {
+    flex: 0 0 21mm; font-size: 7pt; font-weight: 800; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--tomate); padding-top: .9mm;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 1.2mm; }
+  .chip {
+    font-size: 8.2pt; padding: .5mm 2.4mm; border-radius: 10mm;
+    background: var(--papel); border: 1px solid var(--linea);
+  }
+  .chip.sabor { font-weight: 700; border: none; color: #fff; }
+  .s-salado { background: #6C7A89; }
+  .s-dulce { background: #D16BA5; }
+  .s-picante { background: var(--tomate); }
+  .s-fresco { background: var(--aguacate); }
+  .s-suave { background: #C9A227; }
+  .s-frutal { background: #E08A1E; }
+  .opinion {
+    margin-top: 2mm; font-size: 9.4pt; font-style: italic; color: var(--tinta-suave);
+    border-left: 2.5px solid var(--azafran); padding-left: 2.5mm;
+  }
+  .sello {
+    position: absolute; top: -3mm; right: 5mm;
+    background: var(--tomate); color: #fff; font-weight: 800; font-size: 7.5pt;
+    letter-spacing: .15em; text-transform: uppercase; padding: 1mm 3mm; border-radius: 1mm;
+    transform: rotate(-2deg);
+  }
+  .sabias {
+    margin-top: 2mm; font-size: 8.8pt; background: #fff; border-radius: 1.5mm; padding: 1.5mm 2.5mm;
+  }
+  .sabias b { color: var(--tomate); }
+
+  /* ================= PÁGINA 3: SALUD ================= */
+  .articulo { display: grid; grid-template-columns: 1fr 52mm; gap: 6mm; padding: 3mm 14mm 0; }
+  .articulo .cuerpo { columns: 2; column-gap: 6mm; font-size: 9.8pt; text-align: justify; hyphens: auto; }
+  .articulo .cuerpo p { margin-bottom: 2.2mm; }
+  .articulo .cuerpo p:first-child::first-letter {
+    float: left; font-family: "Playfair Display", serif; font-weight: 900;
+    font-size: 30pt; line-height: .85; color: var(--tomate); margin: 1mm 1.5mm 0 0;
+  }
+  .enemigos {
+    background: var(--tinta); color: #fff; border-radius: 2.5mm; padding: 4mm;
+  }
+  .enemigos h3 { font-size: 13pt; line-height: 1.1; color: var(--maiz); margin-bottom: 2.5mm; }
+  .enemigo { display: grid; grid-template-columns: 9mm 1fr; gap: 2mm; margin-bottom: 2.5mm; font-size: 8.6pt; line-height: 1.35; }
+  .enemigo:last-child { margin-bottom: 0; }
+  .enemigo .ico {
+    width: 9mm; height: 9mm; border-radius: 50%; background: var(--tomate);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Playfair Display", serif; font-weight: 900; font-size: 11pt;
+  }
+  .enemigo b { display: block; color: #fff; font-size: 9.2pt; }
+  .enemigo span { color: rgba(255,255,255,.78); }
+
+  .duelo { margin: 4mm 14mm 0; border-radius: 3mm; overflow: hidden; border: 1px solid var(--linea); background: #fff; }
+  .duelo .titulo {
+    background: var(--tinta); color: #fff; text-align: center; padding: 2.5mm;
+    font-family: "Playfair Display", serif; font-weight: 900; font-size: 17pt; letter-spacing: .02em;
+  }
+  .duelo .titulo span { color: var(--azafran); font-style: italic; }
+  .rincones { display: grid; grid-template-columns: 1fr 16mm 1fr; align-items: center; }
+  .rincon { padding: 3mm 4mm 2mm; text-align: center; }
+  .rincon.rojo { background: #FCE7E2; }
+  .rincon.verde { background: var(--aguacate-cl); }
+  .rincon .esq { font-size: 7.5pt; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+  .rincon.rojo .esq { color: var(--tomate); }
+  .rincon.verde .esq { color: var(--aguacate); }
+  .rincon h3 { font-size: 13pt; line-height: 1.1; margin: .5mm 0; }
+  .rincon .que { font-size: 8.4pt; color: var(--tinta-suave); }
+  .rincon svg { height: 25mm; width: auto; margin-top: 1mm; }
+  .vs {
+    align-self: stretch; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(90deg, #FCE7E2 50%, var(--aguacate-cl) 50%);
+  }
+  .vs div {
+    width: 13mm; height: 13mm; border-radius: 50%; background: var(--azafran); color: var(--tinta);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Playfair Display", serif; font-weight: 900; font-style: italic; font-size: 14pt;
+    box-shadow: 0 0 0 1.2mm #fff;
+  }
+  table.comparacion { width: 100%; border-collapse: collapse; font-size: 8.8pt; }
+  .comparacion td { padding: 1.2mm 3mm; border-top: 1px solid var(--linea); width: 39%; }
+  .comparacion td.criterio {
+    width: 22%; white-space: nowrap; text-align: center; font-weight: 800; font-size: 7.2pt; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--tinta-suave); background: var(--papel);
+  }
+  .comparacion td.izq { text-align: right; }
+  .gana { font-weight: 700; color: var(--aguacate); }
+  .gana::after { content: " ✓"; }
+  .pierde { color: var(--tomate); }
+
+  .veredicto { margin: 3.5mm 14mm 0; display: grid; grid-template-columns: 1fr 50mm; gap: 5mm; align-items: start; }
+  .veredicto h3 { font-size: 14pt; margin-bottom: 1.5mm; }
+  .veredicto p { font-size: 9.6pt; text-align: justify; }
+  .con { background: var(--maiz); font-weight: 700; padding: 0 .8mm; border-radius: .8mm; }
+  .conectores {
+    background: var(--papel); border: 1px solid var(--linea); border-radius: 2.5mm; padding: 3mm 3.5mm;
+    font-size: 8.4pt;
+  }
+  .conectores b { display: block; font-size: 7.5pt; letter-spacing: .15em; text-transform: uppercase; color: var(--tomate); margin-bottom: 1.5mm; }
+  .conectores .chips { gap: 1mm; }
+  .conectores .chip { background: var(--maiz); border: none; font-weight: 600; font-size: 8pt; }
+  .ganador {
+    margin-top: 2.5mm; background: var(--aguacate); color: #fff; border-radius: 2mm; text-align: center;
+    padding: 2mm; font-weight: 800; font-size: 9.5pt;
+  }
+  .ganador span { display: block; font-size: 7pt; letter-spacing: .2em; text-transform: uppercase; opacity: .8; font-weight: 700; }
+
+  /* ================= PÁGINA 4: GLOSARIO ================= */
+  .glosario { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; padding: 4mm 14mm 0; }
+  .palabra {
+    background: #fff; border: 1px solid var(--linea); border-radius: 3mm; padding: 3.2mm 4.5mm;
+    position: relative; overflow: hidden;
+  }
+  .palabra::before {
+    content: attr(data-n); position: absolute; right: 3mm; top: -2mm;
+    font-family: "Playfair Display", serif; font-weight: 900; font-size: 40pt; color: var(--papel); z-index: 0;
+  }
+  .palabra > * { position: relative; z-index: 1; }
+  .palabra h3 { font-size: 17pt; font-weight: 900; line-height: 1.1; color: var(--tomate); }
+  .palabra .cat { font-size: 7.5pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tinta-suave); }
+  .palabra .def { margin-top: 1.4mm; font-size: 9.6pt; }
+  .palabra .ej {
+    margin-top: 2mm; font-size: 9.4pt; font-style: italic; background: var(--papel);
+    border-radius: 1.5mm; padding: 1.8mm 2.5mm; border-left: 2.5px solid var(--azafran);
+  }
+  .palabra .ej u { text-decoration: none; font-weight: 700; color: var(--tomate-osc); }
+  .palabra .donde { margin-top: 1.5mm; font-size: 7.5pt; color: var(--tinta-suave); letter-spacing: .05em; }
+
+  .juego { margin: 4mm 14mm 0; display: grid; grid-template-columns: 1fr 58mm; gap: 5mm; }
+  .juego .caja { background: var(--tinta); color: #fff; border-radius: 3mm; padding: 4mm 5mm; }
+  .juego h3 { font-size: 15pt; color: var(--maiz); }
+  .juego .inst { font-size: 8.8pt; color: rgba(255,255,255,.8); margin: .5mm 0 3mm; }
+  .unir { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6mm 8mm; font-size: 9.6pt; }
+  .unir div { display: flex; align-items: center; gap: 2mm; }
+  .unir .n { width: 5mm; height: 5mm; border-radius: 50%; background: var(--azafran); color: var(--tinta); font-weight: 800; font-size: 7.5pt; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .unir .l { width: 5mm; height: 5mm; border-radius: 50%; border: 1.3px solid var(--maiz); color: var(--maiz); font-weight: 800; font-size: 7.5pt; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+  .soluciones { margin-top: 3mm; font-size: 8pt; color: rgba(255,255,255,.6); transform: rotate(180deg); text-align: right; }
+  .despedida {
+    background: var(--tomate); color: #fff; border-radius: 3mm; padding: 4mm 5mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .despedida .gracias { font-family: "Playfair Display", serif; font-weight: 900; font-size: 22pt; line-height: 1; }
+  .despedida .gracias i { color: var(--maiz); }
+  .despedida p { font-size: 8.8pt; margin-top: 2mm; color: rgba(255,255,255,.9); }
+  .despedida svg { width: 24mm; align-self: flex-end; margin-top: 1mm; }
+
+  .creditos {
+    margin: 4mm 14mm 0; padding-top: 3mm; border-top: 3px solid var(--tinta);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; font-size: 8.2pt; color: var(--tinta-suave);
+  }
+  .creditos b { display: block; font-size: 7pt; letter-spacing: .18em; text-transform: uppercase; color: var(--tinta); margin-bottom: .8mm; }
+</style>
+</head>
+<body>
+
+<!-- ============ Ilustraciones (SVG reutilizables) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="clip-globo"><circle cx="200" cy="200" r="92"/></clipPath>
+
+    <!-- Bandera de España -->
+    <symbol id="bandera-es" viewBox="0 0 30 20">
+      <rect width="30" height="20" fill="#AA151B"/>
+      <rect y="5" width="30" height="10" fill="#F1BF00"/>
+    </symbol>
+    <!-- Bandera de México -->
+    <symbol id="bandera-mx" viewBox="0 0 30 20">
+      <rect width="10" height="20" fill="#006847"/>
+      <rect x="10" width="10" height="20" fill="#fff"/>
+      <rect x="20" width="10" height="20" fill="#CE1126"/>
+      <circle cx="15" cy="10" r="2.6" fill="#8C6A2F"/>
+    </symbol>
+    <!-- Estrella "inventado" -->
+    <symbol id="estrella" viewBox="0 0 30 20">
+      <rect width="30" height="20" fill="#2B2118"/>
+      <path d="M15 3.2l1.9 4.2 4.5.4-3.4 3 1 4.4L15 13l-4 2.2 1-4.4-3.4-3 4.5-.4z" fill="#F2A541"/>
+    </symbol>
+
+    <!-- Chile -->
+    <symbol id="chile" viewBox="0 0 100 60">
+      <path d="M18 22 C40 20 70 26 92 50 C66 44 38 42 16 34 Z" fill="#D7322A"/>
+      <path d="M24 25 C44 25 64 31 80 42" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M18 22 C12 20 10 26 16 34 C10 30 8 22 14 18 Z" fill="#3E7B36"/>
+      <path d="M12 20 C8 12 10 6 16 4" stroke="#3E7B36" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <!-- Aguacate -->
+    <symbol id="aguacate" viewBox="0 0 80 100">
+      <path d="M40 4 C56 4 60 30 70 52 C80 76 64 96 40 96 C16 96 0 76 10 52 C20 30 24 4 40 4 Z" fill="#3F6B2E"/>
+      <path d="M40 12 C52 12 55 34 63 54 C71 74 58 88 40 88 C22 88 9 74 17 54 C25 34 28 12 40 12 Z" fill="#CDE08A"/>
+      <circle cx="40" cy="62" r="14" fill="#8A5A34"/>
+      <circle cx="35" cy="57" r="4" fill="#fff" fill-opacity=".3"/>
+    </symbol>
+    <!-- Tomate -->
+    <symbol id="tomate" viewBox="0 0 80 80">
+      <circle cx="40" cy="44" r="32" fill="#E2412E"/>
+      <ellipse cx="28" cy="34" rx="8" ry="5" fill="#fff" fill-opacity=".35" transform="rotate(-30 28 34)"/>
+      <path d="M40 16 l6 -8 l2 10 l10 -2 l-8 8 l-10 0 l-10 0 l-8 -8 l10 2 l2 -10 z" fill="#3E7B36"/>
+    </symbol>
+    <!-- Limón (rodaja) -->
+    <symbol id="limon" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" fill="#7DB343"/>
+      <circle cx="40" cy="40" r="30" fill="#E9F5B8"/>
+      <g stroke="#7DB343" stroke-width="2.5">
+        <line x1="40" y1="12" x2="40" y2="68"/><line x1="12" y1="40" x2="68" y2="40"/>
+        <line x1="20" y1="20" x2="60" y2="60"/><line x1="60" y1="20" x2="20" y2="60"/>
+      </g>
+      <circle cx="40" cy="40" r="4" fill="#E9F5B8"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ======================================================= -->
+<!--                  PÁGINA 1 · PORTADA                      -->
+<!-- ======================================================= -->
+<section class="page portada">
+  <div class="rojo"></div>
+
+  <div class="barra">
+    <span>Edición N.º 1 · Noviembre 2026</span>
+    <span>Español · Capítulo 6</span>
+  </div>
+
+  <div class="cabezal">
+    <div class="mundo">Mundo</div>
+    <div class="sabroso">SABROSO</div>
+    <div class="lema">La revista que te lleva a viajar <b>con el paladar</b></div>
+  </div>
+
+  <div class="pegatina"><div><span>¡Exclusivo!</span>Un plato inventado por nosotros</div></div>
+
+  <!-- Ilustración: un plato con el mundo dentro -->
+  <svg class="ilustracion" viewBox="0 0 400 400" role="img" aria-label="Un plato con el planeta Tierra dentro, rodeado de chile, aguacate, tomate y limón">
+    <!-- tenedor -->
+    <g fill="#F4E9D8">
+      <rect x="22" y="150" width="9" height="200" rx="4"/>
+      <rect x="10" y="60" width="5" height="70" rx="2.5"/><rect x="20" y="60" width="5" height="70" rx="2.5"/>
+      <rect x="29" y="60" width="5" height="70" rx="2.5"/><rect x="38" y="60" width="5" height="70" rx="2.5"/>
+      <path d="M10 120 h33 v14 q0 22 -16.5 22 q-16.5 0 -16.5 -22 z"/>
+    </g>
+    <!-- cuchillo -->
+    <g fill="#F4E9D8">
+      <path d="M372 60 q22 30 12 120 h-14 z"/>
+      <rect x="370" y="175" width="11" height="175" rx="5"/>
+    </g>
+    <!-- plato -->
+    <circle cx="203" cy="208" r="150" fill="#000" fill-opacity=".18"/>
+    <circle cx="200" cy="200" r="150" fill="#FFFDF8"/>
+    <circle cx="200" cy="200" r="122" fill="#F3E8D6"/>
+    <circle cx="200" cy="200" r="122" fill="none" stroke="#E4D3B8" stroke-width="2"/>
+    <!-- globo -->
+    <circle cx="200" cy="200" r="92" fill="#4FA3C9"/>
+    <g clip-path="url(#clip-globo)">
+      <path d="M130 140 q25 -30 55 -12 q20 14 5 38 q-14 20 -2 40 q10 18 -12 26 q-26 8 -40 -18 q-14 -24 -20 -42 q-6 -20 14 -32z" fill="#7CBF5E"/>
+      <path d="M215 120 q30 -10 55 8 q20 16 8 30 q-12 12 -30 6 q-14 -4 -22 10 q-8 14 6 26 q16 14 8 40 q-8 26 -28 34 q-16 -20 -14 -48 q2 -24 -10 -42 q-12 -20 4 -40 q10 -12 23 -24z" fill="#7CBF5E"/>
+      <path d="M262 236 q22 -6 34 10 q8 14 -6 24 q-18 8 -30 -6 q-8 -14 2 -28z" fill="#7CBF5E"/>
+      <ellipse cx="200" cy="200" rx="92" ry="34" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+      <ellipse cx="200" cy="200" rx="40" ry="92" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
+      <circle cx="170" cy="168" r="70" fill="#fff" fill-opacity=".08"/>
+    </g>
+    <!-- banderitas clavadas en el mapa -->
+    <g>
+      <line x1="168" y1="186" x2="168" y2="150" stroke="#2B2118" stroke-width="2.5"/>
+      <use href="#bandera-es" x="168" y="148" width="26" height="17"/>
+      <line x1="146" y1="236" x2="146" y2="200" stroke="#2B2118" stroke-width="2.5"/>
+      <use href="#bandera-mx" x="146" y="198" width="26" height="17"/>
+    </g>
+    <!-- ingredientes flotando -->
+    <use href="#chile" x="250" y="20" width="130" height="78" transform="rotate(14 315 59)"/>
+    <use href="#aguacate" x="40" y="290" width="80" height="100" transform="rotate(-20 80 340)"/>
+    <use href="#tomate" x="300" y="300" width="84" height="84"/>
+    <use href="#limon" x="58" y="14" width="66" height="66"/>
+  </svg>
+
+  <ul class="titulares">
+    <li>
+      <div class="pag">Pág. 2 · Restaurante</div>
+      <div class="t">España y México en tu mesa</div>
+      <div class="d">La tortilla de patatas y los tacos: dos platos típicos muy sabrosos.</div>
+    </li>
+    <li>
+      <div class="pag">Pág. 2 · Invento</div>
+      <div class="t">El Volcán Maya</div>
+      <div class="d">Chocolate, chile y mango: ¿dulce o picante? ¡Las dos cosas!</div>
+    </li>
+    <li>
+      <div class="pag">Pág. 3 · Salud</div>
+      <div class="t">Duelo Saludable</div>
+      <div class="d">¿Hamburguesa o wrap? Comparamos la comida chatarra con una opción nutritiva.</div>
+    </li>
+    <li>
+      <div class="pag">Pág. 4 · Glosario</div>
+      <div class="t">6 palabras para hablar de comida</div>
+    </li>
+  </ul>
+
+  <div class="editorial">
+    <div class="rotulo">Editorial<small>Querido lector</small></div>
+    <div class="texto">
+      <p>En esta edición viajamos por el mundo sin salir de la cocina. Primero, visitamos España y México para descubrir dos platos típicos muy sabrosos. Después, te presentamos el Volcán Maya, un postre picante inventado por nosotros. También hablamos de la comida chatarra y de cómo elegir opciones más saludables. ¡Esperamos que te guste y buen provecho!</p>
+      <div class="firma"><span class="mano">Henrique y Helena</span><span class="quien">— los editores</span></div>
+    </div>
+  </div>
+
+  <div class="autores">
+    <div><span class="k">Autores</span><b>Henrique Lutz</b> &nbsp;y&nbsp; <b>Helena Guimarães</b></div>
+    <div style="text-align:right"><span class="k">Curso</span>8.º Año · Grupo 84</div>
+  </div>
+</section>
+
+<!-- ======================================================= -->
+<!--          PÁGINA 2 · RESTAURANTE INTERNACIONAL            -->
+<!-- ======================================================= -->
+<section class="page">
+  <div class="cabecera"><b>Mundo Sabroso</b><span>Restaurante Internacional</span></div>
+  <div class="seccion">
+    <span class="antetitulo">Menú del día</span>
+    <h1 class="titulo-seccion">Restaurante <em>Internacional</em></h1>
+    <p class="bajada">Hoy te servimos dos platos típicos de países hispanohablantes y una sorpresa: ¡un plato inventado!</p>
+  </div>
+
+  <div class="menu">
+    <!-- Plato 1: Tortilla española -->
+    <article class="plato">
+      <div class="foto">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Tortilla de patatas en un plato, con una porción cortada">
+          <ellipse cx="150" cy="148" rx="140" ry="44" fill="#E4D3B8"/>
+          <ellipse cx="150" cy="142" rx="140" ry="44" fill="#FFFDF8"/>
+          <ellipse cx="150" cy="142" rx="112" ry="33" fill="#F3E8D6"/>
+          <!-- tortilla entera -->
+          <ellipse cx="135" cy="128" rx="92" ry="30" fill="#C98A33"/>
+          <rect x="43" y="104" width="184" height="24" fill="#C98A33"/>
+          <ellipse cx="135" cy="104" rx="92" ry="30" fill="#F0BE57"/>
+          <ellipse cx="110" cy="98" rx="14" ry="5" fill="#C98A33" fill-opacity=".55"/>
+          <ellipse cx="160" cy="110" rx="18" ry="6" fill="#C98A33" fill-opacity=".45"/>
+          <ellipse cx="148" cy="88" rx="10" ry="4" fill="#C98A33" fill-opacity=".5"/>
+          <ellipse cx="88" cy="112" rx="9" ry="3.5" fill="#C98A33" fill-opacity=".5"/>
+          <!-- porción cortada -->
+          <g transform="translate(200 96)">
+            <path d="M0 40 L70 22 L70 46 L0 64 Z" fill="#F7DC8A"/>
+            <path d="M0 40 L40 4 L70 22 Z" fill="#F0BE57"/>
+            <path d="M0 40 L0 64 L-4 62 L-4 38 Z" fill="#C98A33"/>
+            <rect x="14" y="44" width="9" height="7" fill="#FFF2C4" rx="1.5"/>
+            <rect x="34" y="38" width="10" height="7" fill="#FFF2C4" rx="1.5"/>
+            <rect x="50" y="34" width="8" height="6" fill="#FFF2C4" rx="1.5"/>
+            <rect x="26" y="52" width="8" height="6" fill="#FFF2C4" rx="1.5"/>
+          </g>
+          <!-- perejil -->
+          <g fill="#4F7F45"><circle cx="128" cy="100" r="3"/><circle cx="134" cy="97" r="3"/><circle cx="131" cy="103" r="2.5"/></g>
+        </svg>
+      </div>
+      <div>
+        <div class="pais"><svg viewBox="0 0 30 20"><use href="#bandera-es"/></svg>España</div>
+        <h2>Tortilla española <small>(tortilla de patatas)</small></h2>
+        <p>Es el plato más famoso de España. Los españoles la comen en el almuerzo, en la cena o como tapa en los bares.</p>
+        <div class="fila"><span class="etq">Ingredientes</span>
+          <div class="chips"><span class="chip">patatas</span><span class="chip">huevos</span><span class="chip">cebolla</span><span class="chip">aceite de oliva</span><span class="chip">sal</span></div>
+        </div>
+        <div class="fila"><span class="etq">Sabor</span>
+          <div class="chips"><span class="chip sabor s-salado">salado</span><span class="chip sabor s-suave">suave</span></div>
+        </div>
+        <p class="opinion">Por fuera está dorada y por dentro es jugosa. En nuestra opinión, es muy sabrosa fría o caliente.</p>
+      </div>
+    </article>
+
+    <!-- Plato 2: Tacos mexicanos -->
+    <article class="plato">
+      <div class="foto">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Dos tacos con carne, cebolla, cilantro y salsa, con una rodaja de limón">
+          <ellipse cx="150" cy="156" rx="140" ry="36" fill="#E4D3B8"/>
+          <ellipse cx="150" cy="150" rx="140" ry="36" fill="#FFFDF8"/>
+          <!-- taco de atrás -->
+          <g transform="translate(118 26)">
+            <ellipse cx="80" cy="80" rx="72" ry="12" fill="#D9A23C"/>
+            <path d="M14 82 q10 -22 30 -16 q12 -14 28 -6 q16 -12 30 0 q20 -8 30 18 z" fill="#8B4A2B"/>
+            <g fill="#4F7F45"><circle cx="40" cy="70" r="4"/><circle cx="70" cy="64" r="4"/><circle cx="102" cy="66" r="4"/><circle cx="124" cy="74" r="3.5"/></g>
+            <g fill="#fff"><rect x="52" y="68" width="8" height="5" rx="1.5"/><rect x="88" y="70" width="8" height="5" rx="1.5"/></g>
+            <g fill="#D7322A"><circle cx="60" cy="76" r="3"/><circle cx="112" cy="76" r="3"/></g>
+            <path d="M8 80 A72 72 0 0 0 152 80 Z" fill="#F2C14E"/>
+            <g fill="#D9A23C"><circle cx="40" cy="100" r="2.2"/><circle cx="70" cy="118" r="2.2"/><circle cx="105" cy="112" r="2.2"/><circle cx="128" cy="96" r="2.2"/><circle cx="85" cy="96" r="2.2"/></g>
+          </g>
+          <!-- taco de adelante -->
+          <g transform="translate(20 40)">
+            <ellipse cx="80" cy="80" rx="72" ry="12" fill="#D9A23C"/>
+            <path d="M14 82 q10 -24 30 -18 q12 -14 28 -6 q16 -12 30 0 q20 -8 30 18 z" fill="#8B4A2B"/>
+            <g fill="#4F7F45"><circle cx="36" cy="68" r="4"/><circle cx="66" cy="62" r="4"/><circle cx="96" cy="64" r="4"/><circle cx="122" cy="72" r="3.5"/><circle cx="50" cy="60" r="3"/></g>
+            <g fill="#fff"><rect x="48" y="66" width="8" height="5" rx="1.5"/><rect x="80" y="62" width="8" height="5" rx="1.5"/><rect x="108" y="68" width="8" height="5" rx="1.5"/></g>
+            <g fill="#D7322A"><circle cx="58" cy="74" r="3"/><circle cx="92" cy="74" r="3"/><circle cx="74" cy="70" r="2.5"/></g>
+            <path d="M8 80 A72 72 0 0 0 152 80 Z" fill="#F2C14E"/>
+            <g fill="#D9A23C"><circle cx="40" cy="100" r="2.2"/><circle cx="70" cy="118" r="2.2"/><circle cx="105" cy="112" r="2.2"/><circle cx="128" cy="96" r="2.2"/><circle cx="85" cy="96" r="2.2"/></g>
+          </g>
+          <!-- limón -->
+          <g transform="translate(232 128)">
+            <path d="M0 20 A26 26 0 0 1 52 20 Z" fill="#7DB343"/>
+            <path d="M5 20 A21 21 0 0 1 47 20 Z" fill="#E9F5B8"/>
+            <g stroke="#7DB343" stroke-width="2"><line x1="26" y1="20" x2="26" y2="2"/><line x1="26" y1="20" x2="12" y2="8"/><line x1="26" y1="20" x2="40" y2="8"/></g>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <div class="pais"><svg viewBox="0 0 30 20"><use href="#bandera-mx"/></svg>México</div>
+        <h2>Tacos mexicanos</h2>
+        <p>Los tacos son el símbolo de la comida mexicana. Se preparan con una tortilla de maíz y un relleno de carne. ¡En México se comen a cualquier hora!</p>
+        <div class="fila"><span class="etq">Ingredientes</span>
+          <div class="chips"><span class="chip">tortillas de maíz</span><span class="chip">carne de res</span><span class="chip">cebolla</span><span class="chip">cilantro</span><span class="chip">limón</span><span class="chip">salsa picante</span></div>
+        </div>
+        <div class="fila"><span class="etq">Sabor</span>
+          <div class="chips"><span class="chip sabor s-picante">picante</span><span class="chip sabor s-fresco">fresco</span><span class="chip sabor s-salado">salado</span></div>
+        </div>
+        <p class="opinion">Nos encanta el contraste entre el limón fresco y la salsa picante. ¡Son súper sabrosos!</p>
+      </div>
+    </article>
+
+    <!-- Plato 3: Volcán Maya (inventado) -->
+    <article class="plato inventado">
+      <span class="sello">★ Plato inventado</span>
+      <div class="foto">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Pastel de chocolate en forma de volcán con lava de mango y un chile al lado">
+          <ellipse cx="150" cy="166" rx="135" ry="28" fill="#E4D3B8"/>
+          <ellipse cx="150" cy="160" rx="135" ry="28" fill="#FFFDF8"/>
+          <!-- vapor -->
+          <g stroke="#B9A58E" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7">
+            <path d="M130 46 q-8 -10 0 -20 q8 -10 0 -20"/><path d="M152 40 q-8 -10 0 -20 q8 -10 0 -18"/><path d="M174 46 q-8 -10 0 -20 q8 -10 0 -20"/>
+          </g>
+          <!-- volcán -->
+          <path d="M84 162 L116 66 Q152 54 188 66 L220 162 Q152 176 84 162 Z" fill="#5A3220"/>
+          <path d="M100 150 L122 80" stroke="#7A4730" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="152" cy="66" rx="36" ry="9" fill="#3E2014"/>
+          <!-- lava de mango -->
+          <path d="M116 66 Q152 52 188 66 L190 74 Q192 92 184 92 Q178 92 178 80 L174 104 Q172 118 164 116 Q158 114 160 98 L156 82 Q152 74 148 84 L146 124 Q144 136 136 134 Q130 132 132 118 L134 86 Q130 76 126 86 L124 98 Q120 108 114 100 Q110 92 116 66 Z" fill="#F59E1B"/>
+          <ellipse cx="152" cy="62" rx="30" ry="7" fill="#FFC14D"/>
+          <circle cx="140" cy="60" r="3" fill="#fff" fill-opacity=".6"/>
+          <!-- menta -->
+          <path d="M150 56 q-14 -14 -24 -6 q10 10 24 6z" fill="#4F7F45"/>
+          <path d="M154 56 q12 -16 24 -8 q-10 12 -24 8z" fill="#3E7B36"/>
+          <!-- chile y cubitos de mango -->
+          <use href="#chile" x="200" y="128" width="80" height="48"/>
+          <g fill="#F59E1B"><rect x="40" y="150" width="14" height="12" rx="3"/><rect x="58" y="158" width="12" height="11" rx="3"/><rect x="48" y="140" width="11" height="10" rx="3" fill="#FFC14D"/></g>
+        </svg>
+      </div>
+      <div>
+        <div class="pais"><svg viewBox="0 0 30 20"><use href="#estrella"/></svg>Inventado · Inspirado en México</div>
+        <h2>Volcán Maya</h2>
+        <p>Es un pastelito de chocolate caliente con una pizca de chile por dentro y una «lava» de mango por encima. Lo inventamos para mezclar dos sabores que parecen enemigos: el dulce y el picante.</p>
+        <div class="fila"><span class="etq">Ingredientes</span>
+          <div class="chips"><span class="chip">chocolate amargo</span><span class="chip">harina</span><span class="chip">huevos</span><span class="chip">azúcar</span><span class="chip">mantequilla</span><span class="chip">chile en polvo</span><span class="chip">mango</span></div>
+        </div>
+        <div class="fila"><span class="etq">Sabor</span>
+          <div class="chips"><span class="chip sabor s-dulce">dulce</span><span class="chip sabor s-picante">picante</span><span class="chip sabor s-frutal">frutal</span></div>
+        </div>
+        <p class="opinion">Primero sientes el chocolate dulce; después, un calorcito picante. ¡Es una aventura en la boca!</p>
+        <p class="sabias"><b>¿Sabías que…?</b> Los mayas ya tomaban chocolate con chile hace más de 2000 años.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="pie"><span>Mundo Sabroso · N.º 1</span><span>Restaurante Internacional</span><span class="num">Pág. 2</span></div>
+</section>
+
+<!-- ======================================================= -->
+<!--               PÁGINA 3 · ARTÍCULO DE SALUD               -->
+<!-- ======================================================= -->
+<section class="page">
+  <div class="cabecera"><b>Mundo Sabroso</b><span>Artículo de Salud</span></div>
+  <div class="seccion">
+    <span class="antetitulo">Salud</span>
+    <h1 class="titulo-seccion">Comida chatarra: <em>¿amiga o enemiga?</em></h1>
+    <p class="bajada">Es rápida, barata y deliciosa… pero ¿qué le pasa a nuestro cuerpo cuando la comemos todos los días?</p>
+  </div>
+
+  <div class="articulo">
+    <div class="cuerpo">
+      <p>Hoy en día, muchos jóvenes comen comida chatarra casi todos los días: hamburguesas, papas fritas, refrescos y golosinas. Es rápida, barata y muy sabrosa. Sin embargo, tiene mucha grasa, mucha sal y mucho azúcar, y casi no tiene vitaminas ni fibra.</p>
+      <p>Cuando comemos comida chatarra con frecuencia, nuestro cuerpo lo siente: podemos tener sobrepeso, caries, diabetes o problemas del corazón. Además, después de comer nos sentimos cansados y sin energía para estudiar o hacer deporte.</p>
+      <p>En nuestra opinión, no es necesario prohibir la hamburguesa para siempre. Pero creemos que es importante comer de forma equilibrada: frutas, verduras, legumbres, proteínas y mucha agua. ¡La clave es el equilibrio!</p>
+    </div>
+    <aside class="enemigos">
+      <h3>Los 3 enemigos escondidos</h3>
+      <div class="enemigo"><div class="ico">G</div><div><b>Grasa</b><span>Aumenta el colesterol y daña el corazón.</span></div></div>
+      <div class="enemigo"><div class="ico">A</div><div><b>Azúcar</b><span>Causa caries y aumenta el riesgo de diabetes.</span></div></div>
+      <div class="enemigo"><div class="ico">S</div><div><b>Sal</b><span>Sube la presión arterial.</span></div></div>
+    </aside>
+  </div>
+
+  <div class="duelo">
+    <div class="titulo">Duelo <span>Saludable</span></div>
+    <div class="rincones">
+      <div class="rincon rojo">
+        <div class="esq">Esquina roja</div>
+        <h3>Combo chatarra</h3>
+        <div class="que">Hamburguesa doble, papas fritas y refresco</div>
+        <svg viewBox="0 0 260 170" role="img" aria-label="Hamburguesa, papas fritas y un refresco">
+          <!-- refresco -->
+          <g transform="translate(196 22)">
+            <path d="M10 0 L32 -26" stroke="#2B2118" stroke-width="4" stroke-linecap="round"/>
+            <rect x="-4" y="0" width="56" height="10" rx="4" fill="#ECECEC"/>
+            <path d="M0 10 H48 L42 128 H6 Z" fill="#C8402B"/>
+            <path d="M3 44 H45 L44 70 H4 Z" fill="#fff"/>
+            <path d="M14 52 q10 10 20 0" stroke="#C8402B" stroke-width="3" fill="none"/>
+          </g>
+          <!-- papas fritas -->
+          <g transform="translate(130 40)">
+            <g fill="#F6C945">
+              <rect x="6" y="0" width="9" height="56" rx="2" transform="rotate(-10 10 28)"/>
+              <rect x="18" y="-6" width="9" height="60" rx="2"/>
+              <rect x="30" y="-2" width="9" height="58" rx="2" transform="rotate(6 34 28)"/>
+              <rect x="42" y="4" width="9" height="52" rx="2" transform="rotate(12 46 28)"/>
+            </g>
+            <path d="M0 40 H58 L52 110 H6 Z" fill="#C8402B"/>
+            <path d="M0 40 Q29 58 58 40" fill="#A8301F"/>
+            <circle cx="29" cy="78" r="10" fill="#F6C945"/>
+          </g>
+          <!-- hamburguesa -->
+          <g transform="translate(6 40)">
+            <path d="M6 112 H118 Q118 128 100 128 H24 Q6 128 6 112 Z" fill="#D9934A"/>
+            <rect x="2" y="92" width="122" height="20" rx="9" fill="#6B3A22"/>
+            <path d="M8 92 L40 92 L34 104 L30 92 L86 92 L80 106 L74 92 L118 92 L118 86 H8 Z" fill="#F6C945"/>
+            <rect x="2" y="70" width="122" height="18" rx="8" fill="#6B3A22"/>
+            <path d="M0 70 q10 -10 20 0 q10 -10 20 0 q10 -10 22 0 q10 -10 22 0 q10 -10 20 0 q10 -10 22 0 z" fill="#6FAE4B"/>
+            <path d="M4 60 Q4 6 63 6 Q122 6 122 60 Z" fill="#E3A257"/>
+            <g fill="#FFF3D6"><ellipse cx="40" cy="28" rx="4" ry="2.4"/><ellipse cx="62" cy="20" rx="4" ry="2.4"/><ellipse cx="84" cy="30" rx="4" ry="2.4"/><ellipse cx="52" cy="42" rx="4" ry="2.4"/><ellipse cx="96" cy="44" rx="4" ry="2.4"/><ellipse cx="28" cy="46" rx="4" ry="2.4"/></g>
+            <rect x="4" y="60" width="118" height="10" fill="#D7322A" rx="3"/>
+          </g>
+        </svg>
+      </div>
+      <div class="vs"><div>VS</div></div>
+      <div class="rincon verde">
+        <div class="esq">Esquina verde</div>
+        <h3>Combo nutritivo</h3>
+        <div class="que">Wrap de pollo con ensalada y jugo natural de naranja</div>
+        <svg viewBox="0 0 260 170" role="img" aria-label="Wrap de pollo, ensalada y jugo de naranja">
+          <!-- jugo -->
+          <g transform="translate(200 20)">
+            <circle cx="44" cy="6" r="16" fill="#F59E1B"/><circle cx="44" cy="6" r="12" fill="#FFD27A"/>
+            <path d="M0 0 H50 L44 130 H6 Z" fill="#fff" fill-opacity=".7" stroke="#D8CBB8" stroke-width="2"/>
+            <path d="M2 20 H48 L44 128 H6 Z" fill="#F7A325"/>
+            <path d="M18 -20 L26 60" stroke="#4F7F45" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          <!-- ensalada -->
+          <g transform="translate(108 70)">
+            <g fill="#6FAE4B">
+              <circle cx="20" cy="30" r="16"/><circle cx="42" cy="22" r="18"/><circle cx="66" cy="26" r="16"/><circle cx="82" cy="34" r="12"/>
+            </g>
+            <g fill="#3E7B36"><circle cx="30" cy="22" r="9"/><circle cx="58" cy="18" r="9"/></g>
+            <circle cx="40" cy="32" r="7" fill="#E2412E"/><circle cx="68" cy="34" r="6" fill="#E2412E"/><circle cx="22" cy="36" r="5" fill="#E2412E"/>
+            <rect x="48" y="30" width="10" height="6" rx="2" fill="#F6E7A8"/>
+            <path d="M0 38 H96 Q92 90 48 90 Q4 90 0 38 Z" fill="#fff" stroke="#D8CBB8" stroke-width="2"/>
+            <path d="M8 56 H88" stroke="#4F7F45" stroke-width="3" stroke-opacity=".5"/>
+          </g>
+          <!-- wrap (dos mitades) -->
+          <g transform="translate(6 40)">
+            <g>
+              <rect x="20" y="30" width="80" height="58" rx="10" fill="#E8C98E"/>
+              <ellipse cx="22" cy="59" rx="20" ry="29" fill="#F3DDB0"/>
+              <ellipse cx="22" cy="59" rx="15" ry="23" fill="#6FAE4B"/>
+              <ellipse cx="22" cy="59" rx="10" ry="16" fill="#F6E7C8"/>
+              <circle cx="18" cy="52" r="3.5" fill="#E2412E"/><circle cx="26" cy="64" r="3.5" fill="#E2412E"/>
+              <path d="M40 40 q20 6 54 0" stroke="#D2AC66" stroke-width="2" fill="none"/>
+            </g>
+            <g transform="translate(14 54)">
+              <rect x="20" y="30" width="72" height="54" rx="10" fill="#E8C98E"/>
+              <ellipse cx="22" cy="57" rx="19" ry="27" fill="#F3DDB0"/>
+              <ellipse cx="22" cy="57" rx="14" ry="21" fill="#6FAE4B"/>
+              <ellipse cx="22" cy="57" rx="9" ry="14" fill="#F6E7C8"/>
+              <circle cx="20" cy="50" r="3.2" fill="#E2412E"/><circle cx="25" cy="62" r="3.2" fill="#E2412E"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <table class="comparacion">
+      <tr><td class="izq pierde">≈ 1100 kcal</td><td class="criterio">Calorías</td><td class="gana">≈ 450 kcal</td></tr>
+      <tr><td class="izq pierde">mucha (frita)</td><td class="criterio">Grasa</td><td class="gana">poca</td></tr>
+      <tr><td class="izq pierde">≈ 10 cucharaditas (refresco)</td><td class="criterio">Azúcar</td><td class="gana">solo el azúcar natural de la fruta</td></tr>
+      <tr><td class="izq pierde">casi nada</td><td class="criterio">Vitaminas y fibra</td><td class="gana">muchas</td></tr>
+      <tr><td class="izq pierde">cansancio y sueño</td><td class="criterio">Después de comer</td><td class="gana">energía para estudiar</td></tr>
+    </table>
+  </div>
+
+  <div class="veredicto">
+    <div>
+      <h3>Nuestro veredicto</h3>
+      <p>La hamburguesa es muy sabrosa; <span class="con">sin embargo</span>, tiene demasiada grasa y sal. <span class="con">En cambio</span>, el wrap de pollo es nutritivo y también es rico. <span class="con">Aunque</span> las papas fritas son deliciosas, la ensalada nos da vitaminas y fibra. <span class="con">Mientras que</span> el refresco solo tiene azúcar, el jugo natural tiene vitamina C. La comida chatarra nos deja cansados; <span class="con">por otro lado</span>, el combo saludable nos da energía para todo el día. <span class="con">Pero</span> atención: comer una hamburguesa de vez en cuando no es un crimen. ¡Lo importante es no comerla todos los días!</p>
+    </div>
+    <div>
+      <div class="conectores">
+        <b>Conectores de contraste</b>
+        <div class="chips"><span class="chip">sin embargo</span><span class="chip">en cambio</span><span class="chip">aunque</span><span class="chip">mientras que</span><span class="chip">por otro lado</span><span class="chip">pero</span></div>
+      </div>
+      <div class="ganador"><span>Ganador del duelo</span>🥇 Combo nutritivo</div>
+    </div>
+  </div>
+
+  <div class="pie"><span>Mundo Sabroso · N.º 1</span><span>Artículo de Salud</span><span class="num">Pág. 3</span></div>
+</section>
+
+<!-- ======================================================= -->
+<!--               PÁGINA 4 · GLOSARIO DE SABORES             -->
+<!-- ======================================================= -->
+<section class="page">
+  <div class="cabecera"><b>Mundo Sabroso</b><span>Glosario de Sabores</span></div>
+  <div class="seccion">
+    <span class="antetitulo">Mini diccionario</span>
+    <h1 class="titulo-seccion">Glosario de <em>Sabores</em></h1>
+    <p class="bajada">Seis palabras clave del capítulo para hablar de comida en español, con ejemplos sacados de esta revista.</p>
+  </div>
+
+  <div class="glosario">
+    <div class="palabra" data-n="1">
+      <h3>sabroso, sabrosa</h3>
+      <div class="cat">adjetivo · pág. 2</div>
+      <p class="def">Que tiene muy buen sabor; que es agradable de comer.</p>
+      <p class="ej">«Los tacos mexicanos son súper <u>sabrosos</u>».</p>
+    </div>
+    <div class="palabra" data-n="2">
+      <h3>picante</h3>
+      <div class="cat">adjetivo · pág. 2</div>
+      <p class="def">Que produce una sensación de calor o ardor en la boca, como el chile o la pimienta.</p>
+      <p class="ej">«El Volcán Maya es dulce y un poco <u>picante</u>».</p>
+    </div>
+    <div class="palabra" data-n="3">
+      <h3>ingrediente</h3>
+      <div class="cat">sustantivo masculino · pág. 2</div>
+      <p class="def">Cada uno de los alimentos que usamos para preparar un plato o una receta.</p>
+      <p class="ej">«Los <u>ingredientes</u> de la tortilla son patatas, huevos, cebolla, aceite y sal».</p>
+    </div>
+    <div class="palabra" data-n="4">
+      <h3>comida chatarra</h3>
+      <div class="cat">sustantivo femenino · pág. 3</div>
+      <p class="def">Comida rápida con mucha grasa, sal o azúcar y pocos nutrientes. También se dice «comida basura».</p>
+      <p class="ej">«La <u>comida chatarra</u> es rápida y barata, pero casi no tiene vitaminas».</p>
+    </div>
+    <div class="palabra" data-n="5">
+      <h3>saludable</h3>
+      <div class="cat">adjetivo · pág. 3</div>
+      <p class="def">Que es bueno para la salud y ayuda a tener un cuerpo fuerte.</p>
+      <p class="ej">«El combo <u>saludable</u> nos da energía para todo el día».</p>
+    </div>
+    <div class="palabra" data-n="6">
+      <h3>nutritivo, nutritiva</h3>
+      <div class="cat">adjetivo · pág. 3</div>
+      <p class="def">Que alimenta bien porque tiene vitaminas, proteínas, minerales o fibra.</p>
+      <p class="ej">«El wrap de pollo es <u>nutritivo</u> y también es rico».</p>
+    </div>
+  </div>
+
+  <div class="juego">
+    <div class="caja">
+      <h3>Juego: ¿qué sabor tiene?</h3>
+      <p class="inst">Une cada alimento con su sabor.</p>
+      <div class="unir">
+        <div><span class="n">1</span>el limón</div>          <div><span class="l">A</span>dulce</div>
+        <div><span class="n">2</span>el chocolate</div>      <div><span class="l">B</span>picante</div>
+        <div><span class="n">3</span>la salsa de chile</div> <div><span class="l">C</span>salado</div>
+        <div><span class="n">4</span>las papas fritas</div>  <div><span class="l">D</span>agrio</div>
+      </div>
+      <p class="soluciones">Soluciones: 1-D · 2-A · 3-B · 4-C</p>
+    </div>
+    <div class="despedida">
+      <div>
+        <div class="gracias">¡Buen <i>provecho!</i></div>
+        <p>Gracias por leer Mundo Sabroso. En el próximo número: los postres de Argentina y Colombia.</p>
+      </div>
+      <svg viewBox="0 0 80 80" aria-hidden="true"><use href="#limon" width="80" height="80"/></svg>
+    </div>
+  </div>
+
+  <div class="creditos">
+    <div><b>Redacción</b>Henrique Lutz<br>Helena Guimarães</div>
+    <div><b>Revista escolar</b>Español · Capítulo 6<br>8.º Año · Grupo 84</div>
+    <div><b>Edición</b>N.º 1<br>Noviembre de 2026</div>
+  </div>
+
+  <div class="pie"><span>Mundo Sabroso · N.º 1</span><span>Glosario de Sabores</span><span class="num">Pág. 4</span></div>
+</section>
+
+</body>
+</html>

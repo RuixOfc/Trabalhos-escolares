@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roteiro da Degustação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tomate: #C8402B; --tomate-osc: #8E2617; --azafran: #F2A541; --maiz: #F6D27A;
+    --aguacate: #4F7F45; --aguacate-cl: #E3EED8; --crema: #FFF8EE; --papel: #FBF1E2;
+    --tinta: #2B2118; --tinta-suave: #5E4E40; --linea: #E7D6BF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #E6DFD4; color: var(--tinta); font-family: "Inter", "Liberation Sans", sans-serif; font-size: 10pt; line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; margin: 12mm auto; background: #fff; position: relative; overflow: hidden; padding: 12mm 14mm; box-shadow: 0 6px 30px rgba(43,33,24,.25); }
+  @page { size: A4; margin: 0; }
+  @media print { body { background: #fff; } .page { margin: 0; box-shadow: none; break-after: page; } .page:last-child { break-after: auto; } }
+  h1, h2, h3 { font-family: "Playfair Display", "DejaVu Serif", serif; }
+
+  .topo { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid var(--tinta); padding-bottom: 3mm; }
+  .topo h1 { font-size: 24pt; line-height: 1.05; font-weight: 900; }
+  .topo h1 em { color: var(--tomate); }
+  .topo .meta { text-align: right; font-size: 8.5pt; color: var(--tinta-suave); }
+  .topo .meta b { color: var(--tinta); }
+  .intro { margin-top: 3mm; font-size: 9.5pt; color: var(--tinta-suave); }
+  .intro b { color: var(--tinta); }
+
+  h2 { font-size: 15pt; margin: 4mm 0 2mm; display: flex; align-items: center; gap: 2.5mm; }
+  h2 .n { font-family: "Inter", sans-serif; font-size: 8pt; font-weight: 800; background: var(--tomate); color: #fff; width: 6mm; height: 6mm; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+
+  .fala { display: grid; grid-template-columns: 24mm 1fr; gap: 3mm; padding: 1.8mm 0; border-bottom: 1px dashed var(--linea); }
+  .fala:last-child { border-bottom: none; }
+  .quem { font-size: 7.5pt; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; padding-top: .8mm; }
+  .quem.he { color: var(--tomate); }
+  .quem.hl { color: var(--aguacate); }
+  .es { font-size: 10.5pt; font-weight: 500; }
+  .pt { font-size: 8.5pt; color: var(--tinta-suave); font-style: italic; margin-top: .5mm; }
+  .tempo { font-size: 8pt; color: var(--tinta-suave); margin-top: 2mm; }
+
+  .pron { display: grid; grid-template-columns: 1fr 1fr; gap: 0 6mm; }
+  .pal { padding: 1.4mm 0; border-bottom: 1px solid var(--linea); }
+  .pal div { display: flex; gap: 2.5mm; align-items: baseline; }
+  .pal b { font-size: 10pt; }
+  .pal span { color: var(--tomate-osc); font-weight: 700; font-size: 9.5pt; }
+  .pal p { font-size: 8.3pt; color: var(--tinta-suave); line-height: 1.35; }
+  .dica { background: var(--papel); border-left: 3px solid var(--azafran); border-radius: 1.5mm; padding: 2.5mm 3.5mm; font-size: 9pt; margin-top: 3mm; }
+  .dica b { color: var(--tomate-osc); }
+
+  .pergunta { padding: 2mm 0; border-bottom: 1px dashed var(--linea); }
+  .pergunta .q { font-weight: 700; font-size: 10pt; }
+  .pergunta .r { font-size: 10pt; margin-top: .5mm; }
+  .pergunta .r::before { content: "→ "; color: var(--tomate); font-weight: 800; }
+  .pergunta .pt { margin-top: .3mm; }
+
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .card { border: 1px solid var(--linea); border-radius: 2.5mm; padding: 3.5mm 4mm; background: var(--crema); }
+  .card h3 { font-size: 12pt; margin-bottom: 1.5mm; }
+  .card ul, .card ol { padding-left: 4.5mm; font-size: 9pt; }
+  .card li { margin-bottom: 1mm; }
+  .card .obs { font-size: 8.3pt; color: var(--tinta-suave); margin-top: 2mm; }
+  .check li { list-style: none; margin-left: -4.5mm; padding-left: 6mm; position: relative; }
+  .check li::before { content: ""; position: absolute; left: 0; top: .6mm; width: 3.2mm; height: 3.2mm; border: 1.5px solid var(--tinta); border-radius: .8mm; }
+  .rodape { position: absolute; left: 14mm; right: 14mm; bottom: 8mm; font-size: 7.5pt; color: var(--tinta-suave); display: flex; justify-content: space-between; border-top: 1px solid var(--linea); padding-top: 2mm; }
+</style>
+</head>
+<body>
+
+<!-- ===================== FOLHA 1 ===================== -->
+<section class="page">
+  <div class="topo">
+    <h1>Roteiro da <em>degustação</em><br>Tortilla española</h1>
+    <div class="meta"><b>Mundo Sabroso</b> · Espanhol, Cap. 6<br>Henrique Lutz e Helena Guimarães<br>8.º ano · Turma 84</div>
+  </div>
+  <p class="intro">Prato escolhido: <b>tortilla española</b> (pág. 2 da revista). É fácil de fazer, fica boa fria e dá para cortar em cubinhos. O roteiro cobre o que a professora pede: <b>nome, país de origem e ingredientes-chave</b>. A tradução em itálico é só para vocês; na hora, falem apenas o espanhol.</p>
+
+  <h2><span class="n">1</span>Falas (≈ 1 minuto)</h2>
+  <div class="fala"><div class="quem hl">Helena</div><div>
+    <div class="es">¡Hola a todos! Somos Helena y Henrique, y hoy les presentamos nuestro plato: la tortilla española, también llamada tortilla de patatas.</div>
+    <div class="pt">Olá a todos! Somos Helena e Henrique, e hoje apresentamos a vocês nosso prato: a tortilha espanhola, também chamada de tortilha de batatas.</div>
+  </div></div>
+  <div class="fala"><div class="quem he">Henrique</div><div>
+    <div class="es">Es un plato típico de España. Los españoles la comen en el almuerzo, en la cena o como tapa en los bares.</div>
+    <div class="pt">É um prato típico da Espanha. Os espanhóis a comem no almoço, no jantar ou como petisco nos bares.</div>
+  </div></div>
+  <div class="fala"><div class="quem hl">Helena</div><div>
+    <div class="es">Los ingredientes clave son cinco: patatas, huevos, cebolla, aceite de oliva y sal.</div>
+    <div class="pt">Os ingredientes-chave são cinco: batatas, ovos, cebola, azeite de oliva e sal.</div>
+  </div></div>
+  <div class="fala"><div class="quem he">Henrique</div><div>
+    <div class="es">Primero, freímos las patatas y la cebolla en aceite. Después, las mezclamos con los huevos batidos y cocinamos todo en la sartén por los dos lados.</div>
+    <div class="pt">Primeiro, fritamos as batatas e a cebola no azeite. Depois, misturamos com os ovos batidos e cozinhamos tudo na frigideira dos dois lados.</div>
+  </div></div>
+  <div class="fala"><div class="quem hl">Helena</div><div>
+    <div class="es">Su sabor es suave y un poco salado. Por fuera está dorada y por dentro es jugosa. En nuestra opinión, es muy sabrosa y también es nutritiva, porque tiene proteínas del huevo.</div>
+    <div class="pt">O sabor é suave e um pouco salgado. Por fora fica dourada e por dentro é suculenta. Na nossa opinião, é muito saborosa e também nutritiva, porque tem a proteína do ovo.</div>
+  </div></div>
+  <div class="fala"><div class="quem he">Henrique</div><div>
+    <div class="es">La preparamos en casa con ayuda de nuestra familia. ¡Esperamos que les guste! ¡Buen provecho!</div>
+    <div class="pt">Nós a preparamos em casa com a ajuda da nossa família. Esperamos que vocês gostem! Bom apetite!</div>
+  </div></div>
+  <p class="tempo">Ensaiem em voz alta pelo menos 3 vezes. Se sobrar tempo, mostrem a revista aberta na pág. 2 enquanto falam.</p>
+
+  <h2><span class="n">2</span>Pronúncia das palavras difíceis</h2>
+  <div class="pron"><div class="pal"><div><b>tortilla</b><span>tor-TI-ya</span></div><p>“ll” soa como “i” (ou um “j” bem suave), nunca “lh”.</p></div><div class="pal"><div><b>cebolla</b><span>se-BÔ-ya</span></div><p>Mesmo “ll”. Na Espanha o “c” soa como “th” do inglês, mas “s” também está certo.</p></div><div class="pal"><div><b>huevos</b><span>UÊ-bos</span></div><p>O “h” é mudo e o “v” soa como “b”.</p></div><div class="pal"><div><b>aceite</b><span>a-SÊI-te</span></div><p>Ditongo “ei” bem marcado.</p></div><div class="pal"><div><b>jugosa</b><span>rru-GÔ-sa</span></div><p>O “j” é um “r” aspirado, como o “rr” de “carro” no Rio.</p></div><div class="pal"><div><b>sartén</b><span>sar-TÉN</span></div><p>O “n” final não vira som nasal como em português.</p></div><div class="pal"><div><b>almuerzo</b><span>al-MUÊR-so</span></div><p>O “l” no fim da sílaba é “l” mesmo, não “u”.</p></div><div class="pal"><div><b>freímos</b><span>fre-Í-mos</span></div><p>O acento separa as vogais: “fre-í”.</p></div></div>
+  <div class="dica"><b>Dica:</b> em espanhol, o “o” e o “e” no fim das palavras não viram “u” e “i” como no português. Falem “huev<b>o</b>s”, “típic<b>o</b>”, “sabros<b>a</b>”, “aceit<b>e</b>”.</div>
+
+  <div class="rodape"><span>Mundo Sabroso · Roteiro da degustação</span><span>1 / 2</span></div>
+</section>
+
+<!-- ===================== FOLHA 2 ===================== -->
+<section class="page">
+  <h2 style="margin-top:0"><span class="n">3</span>Se a professora fizer perguntas</h2>
+  <div class="pergunta">
+    <div class="q">¿Por qué eligieron este plato?</div>
+    <div class="r">Porque es fácil de preparar en casa y nos encanta su sabor.</div>
+    <div class="pt">Por que escolheram este prato? → Porque é fácil de fazer em casa e adoramos o sabor.</div>
+  </div>
+  <div class="pergunta">
+    <div class="q">¿Fue difícil prepararlo?</div>
+    <div class="r">Un poco. La parte más difícil fue dar la vuelta a la tortilla.</div>
+    <div class="pt">Foi difícil preparar? → Um pouco. A parte mais difícil foi virar a tortilha.</div>
+  </div>
+  <div class="pergunta">
+    <div class="q">¿Es un plato saludable?</div>
+    <div class="r">Sí, bastante. Tiene proteínas del huevo; sin embargo, tiene aceite, por eso es mejor no comer mucho.</div>
+    <div class="pt">É um prato saudável? → Sim, bastante. Tem a proteína do ovo; porém, tem azeite, por isso é melhor não comer muito.</div>
+  </div>
+  <div class="pergunta">
+    <div class="q">¿Con qué se come?</div>
+    <div class="r">Se come sola, con pan o con una ensalada.</div>
+    <div class="pt">Com o que se come? → Sozinha, com pão ou com uma salada.</div>
+  </div>
+  <div class="pergunta">
+    <div class="q">¿Qué otro plato hay en su revista?</div>
+    <div class="r">Los tacos mexicanos y el Volcán Maya, un postre inventado por nosotros.</div>
+    <div class="pt">Que outro prato tem na revista? → Os tacos mexicanos e o Volcán Maya, uma sobremesa que nós inventamos.</div>
+  </div>
+
+  <h2><span class="n">4</span>Para fazer em casa</h2>
+  <div class="duas">
+    <div class="card">
+      <h3>Receita (frigideira de 24 cm)</h3>
+      <ul>
+        <li>4 batatas médias</li>
+        <li>1 cebola</li>
+        <li>5 ovos</li>
+        <li>Azeite (cerca de 1 xícara, para fritar)</li>
+        <li>Sal a gosto</li>
+      </ul>
+      <ol style="margin-top:2mm">
+        <li>Descasque as batatas e corte em fatias finas. Corte a cebola em tiras.</li>
+        <li>Frite batata e cebola no azeite em <b>fogo baixo</b> por uns 20 min, até ficarem macias (não precisam dourar). Escorra o azeite.</li>
+        <li>Bata os ovos com sal, junte as batatas e deixe descansar 10 min.</li>
+        <li>Numa frigideira com 1 colher de azeite, despeje a mistura e cozinhe em fogo médio-baixo por uns 5 min.</li>
+        <li>Cubra com um prato, vire a tortilla e deslize de volta para a frigideira. Mais 3–4 min.</li>
+      </ol>
+      <p class="obs">Fritura e a virada com o prato: façam com um adulto. Rende uns 20 cubinhos.</p>
+    </div>
+    <div class="card">
+      <h3>Para levar à aula</h3>
+      <ul>
+        <li>Deixe esfriar e corte em <b>cubinhos</b>.</li>
+        <li>Espete cada cubinho com um <b>palito</b> (“pincho”, como nos bares da Espanha).</li>
+        <li>Leve num pote fechado. A tortilla pode ser comida fria ou em temperatura ambiente.</li>
+        <li>Avise a turma que <b>tem ovo</b>, por causa de alergias.</li>
+      </ul>
+      <h3 style="margin-top:4mm">Checklist do dia</h3>
+      <ul class="check">
+        <li>Revista impressa (4 páginas)</li>
+        <li>Tortilla em cubinhos + palitos</li>
+        <li>Guardanapos</li>
+        <li>Roteiro ensaiado (sem ler!)</li>
+        <li>Nomes e data no cabeçalho da folha do projeto</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rodape"><span>Mundo Sabroso · Roteiro da degustação</span><span>2 / 2</span></div>
+</section>
+
+</body>
+</html>
